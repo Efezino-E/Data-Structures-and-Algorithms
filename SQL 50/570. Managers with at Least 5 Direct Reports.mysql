@@ -1,0 +1,6 @@
+SELECT b.name 
+FROM Employee a
+INNER JOIN Employee b
+ON b.id = a.managerId
+GROUP BY a.managerId
+HAVING COUNT(a.managerID) > 4
