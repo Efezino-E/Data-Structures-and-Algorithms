@@ -1,0 +1,12 @@
+WITH Sign_up_date AS 
+(
+SELECT player_id, MIN(event_date) as sign_up_date
+FROM Activity
+GROUP BY player_id
+)
+
+SELECT ROUND(COUNT(s.player_id) / (SELECT COUNT(player_id) FROM Sign_up_date), 2) AS fraction
+FROM Sign_up_date s
+LEFT JOIN Activity a
+ON s.player_id = a.player_id AND s.sign_up_date + INTERVAL 1 DAY = a.event_date
+WHERE a.player_id IS NOT NULL
